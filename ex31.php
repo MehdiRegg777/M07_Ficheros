@@ -10,7 +10,9 @@ $lineas = file('contactes31.txt');
 
 if ($lineas !== false) {
 
-    
+
+    //Mostrar loc contactos del primer archivo en una tabla  
+      
     foreach ($lineas as $linea) {
         $datos = explode(', ', $linea);
         
@@ -23,6 +25,9 @@ if ($lineas !== false) {
             echo "<tr><td>$nom</td><td>$cognom1</td><td>$cognom2</td><td>$telefon</td></tr>";
         }
     }
+
+    //generame nuevo archivo canviando la "," con "#"
+
     $archivoNuevo = fopen('contactes31b.txt','w');
     foreach ($lineas as $linea) {
         $datos = explode(', ', $linea);
