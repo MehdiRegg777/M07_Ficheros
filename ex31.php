@@ -1,30 +1,38 @@
-<h2>Login</h2>
+<h2>PROCESSA CONTACTES</h2>
 
-<form method="get">
-    <input type="text" name="user">
-    <br>
-    <input type="password" name="pass" placeholder="password">
-    <br>
-    <input type="submit">
-</form>
 
+
+
+<table border="1" cellpadding="0" cellspacing="0">
+<tr><th>nom</th><th>cognom1</th><th>cognom2</th><th>telèfon</th></tr>
 <?php
-// Diccionario hardcoded de usuarios y contraseñas válidos
-$usuariosValidos = [
-    "mehdi" => "P@ssw0rd",
-    "pepe" => "password",
-    // Agrega más usuarios y contraseñas válidos según sea necesario
-];
+$lineas = file('contactes31.txt');
 
-if (isset($_GET["user"]) && isset($_GET["pass"])) {
-    $usuario = $_GET["user"];
-    $contrasena = $_GET["pass"];
+if ($lineas !== false) {
+
     
-    // Verifica si el usuario y la contraseña coinciden en el diccionario
-    if (array_key_exists($usuario, $usuariosValidos) && $contrasena === $usuariosValidos[$usuario]) {
-        echo "Login correcto!";
-    } else {
-        echo "Login incorrecto";
+    foreach ($lineas as $linea) {
+        $datos = explode(', ', $linea);
+        
+        if (count($datos) >= 4) {
+            $nom = $datos[0];
+            $cognom1 = $datos[1];
+            $cognom2 = $datos[2];
+            $telefon = $datos[3];
+            
+            echo "<tr><td>$nom</td><td>$cognom1</td><td>$cognom2</td><td>$telefon</td></tr>";
+        }
     }
+    $archivoNuevo = fopen('contactes31b.txt','w');
+    foreach ($lineas as $linea) {
+        $datos = explode(', ', $linea);
+        $datonuevo = implode('# ', $datos);
+        fwrite($archivoNuevo, $datonuevo);
+    }
+       
+} else {
+    echo 'No se pudo cargar el archivo de contactos.';
 }
+
 ?>
+</table>
