@@ -17,12 +17,9 @@
     </form>
 
     <?php
-
-        
-
-
+    foreach($_POST["prods"] as $prod) {
+        echo "<p>$prod</p>\n";
+    }
     ?>
-
-
 </body>
 </html>
