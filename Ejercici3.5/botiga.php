@@ -6,20 +6,38 @@
     <title>Botiga</title>
 </head>
 <body>
-    <form>
-        <input type="checkbox" name="prod[]" value="peres">Peres
-        <br>
-        <input type="checkbox" name="prod[]" value="pomes">Pomes
-        <br>
-        <input type="checkbox" name="prod[]" value="pastanagues">Pastanagues
-        <br>
-        <input type="submit">
+
+    <form method="POST">
+
+        <?php
+            $file = fopen("productes.txt", "r");
+            while($line = fgets($file)) {
+                
+                echo "<input type='checkbox' name='prods[]' value='".trim($line)."' > $line </input>";
+                echo "<br>";
+                               
+            }
+
+            echo "\n<input type='text' name='usuario' required>";
+            echo "<input type='submit' value='enviar'>";
+
+            if (isset($_POST["prods"])){
+
+                $user= $_POST["usuario"]; 
+                $file = fopen ("comandes.txt", "a");
+                $comanda=$user;
+
+
+
+                foreach ($_POST["prods"] as $producte) {
+                    $comanda.=",".$producte;
+                }
+
+                fwrite($file, $comanda."\n");
+            }
+        ?>
+
     </form>
 
-    <?php
-    foreach($_POST["prods"] as $prod) {
-        echo "<p>$prod</p>\n";
-    }
-    ?>
 </body>
 </html>
